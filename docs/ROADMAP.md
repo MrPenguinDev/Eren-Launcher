@@ -11,6 +11,7 @@
 - Instance creation/list/load.
 - Launch command composition with ownership-verification gate.
 - Java runtime detection helper.
+- Java runtime download for all available Adoptium feature releases.
 - Launch execution runner with structured JSONL logging.
 
 ### Phase 2 — Modding System ✅

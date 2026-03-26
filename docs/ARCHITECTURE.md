@@ -10,6 +10,7 @@ eren_launcher/
   downloader.py       -> artifact cache + SHA1 verification
   gui.py              -> XMCL-style desktop UI shell
   instance_store.py   -> java instance persistence
+  java_manager.py     -> Java release catalog + runtime download
   launch.py           -> launch context + command creation
   manifest.py         -> Mojang version manifest integration
   microsoft_oauth.py  -> Microsoft device-code flow primitives

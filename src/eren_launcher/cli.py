@@ -8,6 +8,7 @@ from .auth import SessionStore
 from .bedrock import BedrockProfile, BedrockProfileStore
 from .downloader import ArtifactDownloader
 from .gui import LauncherGUI
+from .java_manager import detect_platform, download_java_runtime, fetch_release_catalog
 from .instance_store import InstanceStore
 from .launch import LaunchContext, build_java_launch_command
 from .manifest import fetch_versions
@@ -75,7 +76,14 @@ def _parser() -> argparse.ArgumentParser:
     bedrock.add_argument("name")
     bedrock.add_argument("packs", nargs="*", default=[])
 
-    sub.add_parser("gui", help="Run minimal desktop GUI prototype")
+    sub.add_parser("java-releases", help="List available Temurin Java feature releases")
+
+    java_dl = sub.add_parser("download-java", help="Download a Java runtime archive from Temurin")
+    java_dl.add_argument("--major", type=int, required=True)
+    java_dl.add_argument("--os", default="")
+    java_dl.add_argument("--arch", default="")
+
+    sub.add_parser("gui", help="Run XMCL-style desktop GUI")
 
     return parser
 
@@ -173,6 +181,29 @@ def main() -> None:
     if args.command == "save-bedrock-profile":
         path = bedrock_store.save(BedrockProfile(name=args.name, packs=args.packs))
         print(f"Bedrock profile saved: {path}")
+        return
+
+    if args.command == "java-releases":
+        try:
+            catalog = fetch_release_catalog()
+        except Exception as exc:
+            raise RuntimeError(f"Failed to fetch Java releases: {exc}")
+        print(f"Available: {catalog.available_releases}")
+        print(f"LTS: {catalog.available_lts_releases}")
+        print(f"Most recent feature: {catalog.most_recent_feature_release}")
+        return
+
+    if args.command == "download-java":
+        os_name, arch = detect_platform()
+        if args.os:
+            os_name = args.os
+        if args.arch:
+            arch = args.arch
+        try:
+            output = download_java_runtime(root / "java", major=args.major, os_name=os_name, arch=arch)
+        except Exception as exc:
+            raise RuntimeError(f"Failed to download Java runtime: {exc}")
+        print(output)
         return
 
     if args.command == "gui":
