@@ -76,14 +76,14 @@ def _parser() -> argparse.ArgumentParser:
     bedrock.add_argument("name")
     bedrock.add_argument("packs", nargs="*", default=[])
 
-    java_releases = sub.add_parser("java-releases", help="List available Temurin Java feature releases")
+    sub.add_parser("java-releases", help="List available Temurin Java feature releases")
 
     java_dl = sub.add_parser("download-java", help="Download a Java runtime archive from Temurin")
     java_dl.add_argument("--major", type=int, required=True)
     java_dl.add_argument("--os", default="")
     java_dl.add_argument("--arch", default="")
 
-    sub.add_parser("gui", help="Run minimal desktop GUI prototype")
+    sub.add_parser("gui", help="Run XMCL-style desktop GUI")
 
     return parser
 
