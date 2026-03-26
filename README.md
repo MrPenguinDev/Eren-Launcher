@@ -5,7 +5,7 @@ A legal, extensible Minecraft launcher for Android/Linux/Windows workflows.
 > This project does **not** provide cracked login, ownership bypass, or DRM circumvention.
 
 ## UI status
-The desktop UI is now a full XMCL-style shell (not a placeholder):
+The desktop UI is a full XMCL-style shell :
 - Dark modern layout with left navigation + home dashboard.
 - Metrics cards (instances/mods/downloads/runtime).
 - Instance library panel and right-side detail context.
