@@ -12,6 +12,7 @@
 - Launch command composition with ownership-verification gate.
 - Java runtime detection helper.
 - Java runtime download for all available Adoptium feature releases.
+- Offline Java catalog/artifact cache mode.
 - Launch execution runner with structured JSONL logging.
 
 ### Phase 2 — Modding System ✅
@@ -26,6 +27,7 @@
 
 ### Phase 4 — Bedrock Workflow Layer ✅
 - Bedrock profile persistence for addon pack collections.
+- Bedrock launch command path without launcher auth requirement.
 
 ### Phase 5 — GUI Frontend ✅
 - XMCL-style desktop shell with sidebar, dashboard cards, instance library, and detail panel.

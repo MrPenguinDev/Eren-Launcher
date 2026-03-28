@@ -4,29 +4,30 @@ A legal, extensible Minecraft launcher for Android/Linux/Windows workflows.
 
 > This project does **not** provide cracked login, ownership bypass, or DRM circumvention.
 
-## Java runtime support
-The launcher now supports **downloading any available Temurin Java feature release** (e.g. 8/11/17/21/...) directly from Adoptium APIs.
+## Java runtime support (online + offline)
+The launcher supports downloading any available Temurin Java feature release and can work in offline mode using cached catalog/artifacts.
 
 Commands:
 ```bash
-# List all available Java releases from Adoptium
+# Update catalog from network and list releases
 PYTHONPATH=src python -m eren_launcher.cli java-releases
 
-# Download a specific Java major version for current machine platform
+# List releases from local cache only
+PYTHONPATH=src python -m eren_launcher.cli java-releases --offline
+
+# Download Java for current platform
 PYTHONPATH=src python -m eren_launcher.cli download-java --major 21
 
-# Download for explicit platform
-PYTHONPATH=src python -m eren_launcher.cli download-java --major 17 --os windows --arch x64
+# Download Java from cache only (no network)
+PYTHONPATH=src python -m eren_launcher.cli download-java --major 21 --offline
+```
+
+## Bedrock note
+Bedrock launch building does not require launcher auth, because account/session is handled in Bedrock itself:
+```bash
+PYTHONPATH=src python -m eren_launcher.cli save-bedrock-profile mobile pack_a pack_b
+PYTHONPATH=src python -m eren_launcher.cli build-bedrock-launch mobile
 ```
 
 ## UI status
-The desktop UI is now a full XMCL-style shell (not a placeholder):
-- Dark modern layout with left navigation + home dashboard.
-- Metrics cards (instances/mods/downloads/runtime).
-- Instance library panel and right-side detail context.
-- Launch action in top bar and ownership/compliance indicators.
-
-Launch it with:
-```bash
-PYTHONPATH=src python -m eren_launcher.cli gui
-```
+The desktop UI is a full XMCL-style shell with dashboard, sidebar navigation, and instance/details panels.

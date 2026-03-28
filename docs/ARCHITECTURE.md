@@ -10,7 +10,7 @@ eren_launcher/
   downloader.py       -> artifact cache + SHA1 verification
   gui.py              -> XMCL-style desktop UI shell
   instance_store.py   -> java instance persistence
-  java_manager.py     -> Java release catalog + runtime download
+  java_manager.py     -> Java catalog + runtime download (online/offline cache)
   launch.py           -> launch context + command creation
   manifest.py         -> Mojang version manifest integration
   microsoft_oauth.py  -> Microsoft device-code flow primitives
@@ -25,3 +25,5 @@ eren_launcher/
 - No cracked mode exists in command surface.
 - Provider APIs are official endpoints (keys/tokens required where applicable).
 - Artifact validation supports SHA1 verification before cache acceptance.
+
+- Bedrock launch command path is auth-free (uses Bedrock built-in account flow).

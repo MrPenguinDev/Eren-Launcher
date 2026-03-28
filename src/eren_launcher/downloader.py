@@ -17,10 +17,16 @@ class ArtifactDownloader:
         digest = hashlib.sha1(url.encode("utf-8")).hexdigest()[:12]
         return f"{digest}-{name}"
 
-    def download(self, url: str, expected_sha1: str | None = None) -> Path:
-        out = self.cache_dir / self._filename_for(url)
+    def cached_path_for(self, url: str) -> Path:
+        return self.cache_dir / self._filename_for(url)
+
+    def download(self, url: str, expected_sha1: str | None = None, offline: bool = False) -> Path:
+        out = self.cached_path_for(url)
         if out.exists() and (expected_sha1 is None or self._sha1(out) == expected_sha1):
             return out
+
+        if offline:
+            raise FileNotFoundError(f"Offline mode enabled and artifact is not cached: {out}")
 
         with urlopen(url, timeout=30) as response:  # nosec: B310
             data = response.read()

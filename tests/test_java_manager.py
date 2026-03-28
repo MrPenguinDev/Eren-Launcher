@@ -26,17 +26,20 @@ class _Resp:
         return json.dumps(self.payload).encode("utf-8")
 
 
-def test_fetch_release_catalog() -> None:
+def test_fetch_release_catalog_online_then_cache(tmp_path: Path) -> None:
     payload = {
         "available_releases": [8, 11, 17, 21],
         "available_lts_releases": [8, 11, 17, 21],
         "most_recent_feature_release": 25,
     }
     with patch("eren_launcher.java_manager.urlopen", return_value=_Resp(payload)):
-        catalog = fetch_release_catalog()
+        catalog = fetch_release_catalog(cache_dir=tmp_path, offline=False)
 
     assert catalog.available_releases == [8, 11, 17, 21]
-    assert catalog.most_recent_feature_release == 25
+
+    # offline should load cached catalog
+    cached = fetch_release_catalog(cache_dir=tmp_path, offline=True)
+    assert cached.most_recent_feature_release == 25
 
 
 def test_build_temurin_download_url() -> None:

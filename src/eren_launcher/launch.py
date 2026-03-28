@@ -56,3 +56,11 @@ def build_java_launch_command(config: InstanceConfig, ctx: LaunchContext) -> lis
         "--uuid",
         ctx.uuid,
     ]
+
+
+def build_bedrock_launch_command(profile_name: str, packs: list[str]) -> list[str]:
+    """Builds a bedrock workflow command without launcher auth requirements."""
+    command = ["bedrock", "--profile", profile_name]
+    for pack in packs:
+        command.extend(["--pack", pack])
+    return command
